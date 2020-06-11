@@ -6,6 +6,7 @@
  var questionDiv = document.getElementById("question");
  var answerButtonEl = document.getElementById("answer-buttons");
  var introduction = document.getElementById("introduction");
+ var timer = document.getElementById("timer");
 
  var score = 0;
 
@@ -16,11 +17,12 @@
  startButton.addEventListener("click", startGame);
  //  submitButton.addEventListener("click");
  nextButton.addEventListener("click", () => {
-     currentQuestionIndex++
      if (currentQuestionIndex === 5) {
          submitButton.classList.remove("hide")
+         nextButton.classList.add("hide")
      } else {
-         nextQuestion()
+         nextQuestion();
+         currentQuestionIndex++;
      }
  });
 
@@ -30,6 +32,7 @@
      introduction.classList.add("hide")
      currentQuestionIndex = 0
      questionContainerDiv.classList.remove("hide");
+     setTime();
      nextQuestion();
  };
 
@@ -48,9 +51,6 @@
          var button = document.createElement("button");
          button.innerText = answer.text;
          button.classList.add("btn");
-         //  if (answer.correct) {
-         //      button.dataset.correct = answer.correct;
-         //  };
          button.addEventListener("click", selectAnswer);
          answerButtonEl.appendChild(button);
      });
@@ -69,8 +69,27 @@
      var userChoice = event.target;
      var correct = userChoice.dataset.correct;
      nextButton.classList.remove("hide");
-
+     if (userChoice === questions.answer) {
+         button.dataset.correct = answer.correct;
+     };
  };
+
+ function setTime() {
+     seconds = 50;
+     var timeInterval = setInterval(function () {
+         seconds--;
+         timer.innerText = seconds + "seconds to go";
+
+         if (seconds === 0) {
+             clearInterval(timeInterval);
+             return;
+         }
+     }, 1000);
+ }
+
+ function clearScreen() {
+
+   };
 
 
 
