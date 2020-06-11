@@ -1,30 +1,34 @@
- // Starts with a home screen, centered with a button to start quiz,
- // this activates a timer and changes the screen to questions. timer runs.
- // multiple choice quiz that changes screen  to another question after you answer
- // after final question, goes to a form to input initials to store the score
- // clicking submit takes to a new page with list of High Scores with a choice to go
- // back to game beginning or clear high scores
-
- // add event listener to start quiz button, then empty dive with the content
- // questions are an object 
-
-
-
-
  // Grabbing my variables
- var score = 0;
  var startButton = document.getElementById("start-btn");
+ var nextButton = document.getElementById("next-btn");
+ var submitButton = document.getElementById("submit-btn");
  var questionContainerDiv = document.getElementById("question-container");
  var questionDiv = document.getElementById("question");
  var answerButtonEl = document.getElementById("answer-buttons");
- var currentQuestions = "";
+ var introduction = document.getElementById("introduction");
+
+ var score = 0;
 
 
- startButton.addEventListener("click", startGame)
 
+
+ // Adding event listeners to create the flow of the game
+ startButton.addEventListener("click", startGame);
+ //  submitButton.addEventListener("click");
+ nextButton.addEventListener("click", () => {
+     currentQuestionIndex++
+     if (currentQuestionIndex === 5) {
+         submitButton.classList.remove("hide")
+     } else {
+         nextQuestion()
+     }
+ });
+
+ // Function that will start the game when called
  function startGame() {
-     startButton.classList.add("hide");
-     currentQuestions = questions[0];
+     startButton.classList.add("hide")
+     introduction.classList.add("hide")
+     currentQuestionIndex = 0
      questionContainerDiv.classList.remove("hide");
      nextQuestion();
  };
@@ -32,7 +36,9 @@
 
  // Function that is invoked by starGame function to prompt question  
  function nextQuestion() {
-     showQuestions(currentQuestions);
+     resetAnswers();
+     showQuestions(questions[currentQuestionIndex]);
+     //  console.log(currentQuestionIndex);
  };
 
 
@@ -42,22 +48,36 @@
          var button = document.createElement("button");
          button.innerText = answer.text;
          button.classList.add("btn");
-         if (answer.correct) {
-             button.dataset.correct = answer.correct;
-         };
+         //  if (answer.correct) {
+         //      button.dataset.correct = answer.correct;
+         //  };
          button.addEventListener("click", selectAnswer);
          answerButtonEl.appendChild(button);
-
      });
  };
 
 
+ function resetAnswers() {
+     nextButton.classList.add("hide");
+     while (answerButtonEl.firstChild) {
+         answerButtonEl.removeChild(answerButtonEl.firstChild);
+     };
+ }
+
 
  function selectAnswer(event) {
      var userChoice = event.target;
-     console.log(userChoice);
-     nextQuestion()
+     var correct = userChoice.dataset.correct;
+     nextButton.classList.remove("hide");
+
  };
+
+
+
+
+
+
+
 
 
  // List of questions 
