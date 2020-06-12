@@ -87,17 +87,6 @@
      }, 1000);
  }
 
- function clearScreen() {
-
-   };
-
-
-
-
-
-
-
-
 
  // List of questions 
  var questions = [{
