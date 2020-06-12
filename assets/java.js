@@ -41,10 +41,10 @@
  function nextQuestion() {
      resetAnswers();
      showQuestions(questions[currentQuestionIndex]);
-     //  console.log(currentQuestionIndex);
  };
 
-
+ // Function that is invoked by nextQuestion and calls in the question objects
+ // to show the next set of questions 
  function showQuestions(questions) {
      questionDiv.innerText = questions.question;
      questions.answer.forEach(answer => {
@@ -56,7 +56,7 @@
      });
  };
 
-
+ // Function that resets the current answer and questions 
  function resetAnswers() {
      nextButton.classList.add("hide");
      while (answerButtonEl.firstChild) {
@@ -64,16 +64,19 @@
      };
  }
 
-
+ // this function is when the user clicks the correct answer, the score should increase
+ // however, this is where my problem is
  function selectAnswer(event) {
      var userChoice = event.target;
      var correct = userChoice.dataset.correct;
      nextButton.classList.remove("hide");
-     if (userChoice === questions.answer) {
-         button.dataset.correct = answer.correct;
+     if (userChoice === true) {
+         score++
+         console.log(score)
      };
  };
 
+ // Timer
  function setTime() {
      seconds = 50;
      var timeInterval = setInterval(function () {
